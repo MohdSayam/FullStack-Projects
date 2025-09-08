@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "@/app/axiosConfig";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -39,7 +39,7 @@ export default function ResetPasswordPage() {
         return;
       }
 
-      await axios.post("/api/users/resetPassword", { password, token, userId });
+      await api.post("/api/users/resetPassword", { password, token, userId });
 
       setMessage("Password has been reset successfully!");
       toast.success("Password Reset Successful!");

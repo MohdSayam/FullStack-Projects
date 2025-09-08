@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import axios from "axios";
+import api from "@/app/axiosConfig";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
 
@@ -20,7 +20,7 @@ export default function ForgotPasswordPage() {
         return;
       }
 
-      await axios.post("/api/users/forgotPassword", { email });
+      await api.post("/api/users/forgotPassword", { email });
 
       setMessage("Password reset email sent! Please check your inbox.");
       toast.success("Email Sent! Please check your inbox.");

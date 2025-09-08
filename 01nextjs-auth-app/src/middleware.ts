@@ -9,29 +9,27 @@ export function middleware(request: NextRequest) {
 
   const token = request.cookies.get("token")?.value;
 
-  let isValidToken = false;
-  if (token) {
+  // // Debug log
+  // console.log("🔎 Path:", path);
+  // console.log("🔎 Token from cookie:", token);
+
+  if (isPublicPath && token) {
     try {
-      //  Verify token with secret
       jwt.verify(token, process.env.TOKEN_SECRET!);
-      isValidToken = true;
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (err) {
-      //  Token expired/invalid
-      isValidToken = false;
+      console.log("✅ Token valid, redirecting to /profile");
+      return NextResponse.redirect(new URL("/profile", request.nextUrl));
+    } catch {
+      console.log("❌ Token invalid, let them stay on public page");
+      // token invalid → let them log in/signup
     }
   }
 
-  // 🔒 If logged in and trying to access public pages → redirect to profile
-  if (isPublicPath && isValidToken) {
-    return NextResponse.redirect(new URL("/profile", request.nextUrl));
-  }
-
-  // 🔑 If not logged in and trying to access private pages → redirect to login
-  if (!isPublicPath && !isValidToken) {
+  if (!isPublicPath && !token) {
+    console.log("⛔ No token, redirecting to /login");
     return NextResponse.redirect(new URL("/login", request.nextUrl));
   }
 
+  // If valid token OR public path → continue
   return NextResponse.next();
 }
 

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import axios from "axios";
+import api from "@/app/axiosConfig";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -10,7 +10,7 @@ export default function Profile() {
   const [data, setData] = useState("nothing");
   const logout = async () => {
     try {
-      await axios.get("/api/users/logout");
+      await api.get("/api/users/logout");
       toast.success("Logout successful");
       router.push("/login");
     } catch (error: any) {
@@ -22,7 +22,7 @@ export default function Profile() {
 
   const getUserDetails = async () => {
     try {
-      const res = await axios.get("/api/users/me");
+      const res = await api.get("/api/users/me");
       console.log(res.data);
       setData(res.data.data._id);
       toast.success("User details fetched!");

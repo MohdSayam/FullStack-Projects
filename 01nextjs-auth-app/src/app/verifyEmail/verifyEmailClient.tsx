@@ -2,7 +2,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import axios from "axios";
+import api from "@/app/axiosConfig";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function VerifyEmailClient() {
@@ -16,7 +16,7 @@ export default function VerifyEmailClient() {
 
   const verifyUserEmail = async (token: string, id: string) => {
     try {
-      const res = await axios.get(
+      const res = await api.get(
         `/api/users/verifyEmail?token=${token}&id=${id}`
       );
       if (res.status === 200) {

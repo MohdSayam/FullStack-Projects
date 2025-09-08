@@ -2,7 +2,7 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "@/app/axiosConfig";
 import { toast } from "react-hot-toast";
 
 export default function UserProfile() {
@@ -19,7 +19,7 @@ export default function UserProfile() {
       try {
         setLoading(true);
         // The API call is now correctly pointed to the `/api/users/me` endpoint.
-        const res = await axios.get(`/api/users/me`);
+        const res = await api.get(`/api/users/me`);
 
         // Data is extracted from the `data` key in the response.
         setUserData({

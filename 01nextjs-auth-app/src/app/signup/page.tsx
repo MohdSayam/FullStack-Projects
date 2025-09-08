@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import axios from "axios";
+import api from "@/app/axiosConfig";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -31,7 +31,7 @@ export default function SignupPage() {
   const onsignup = async () => {
     try {
       setLoading(true);
-      const response = await axios.post("/api/users/signup", user);
+      const response = await api.post("/api/users/signup", user);
       console.log("signup success", response.data);
       toast.success("signup successful");
       router.push("/login");

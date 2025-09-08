@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 import React, { useEffect } from "react";
-import axios from "axios";
+import api from "@/app/axiosConfig";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
@@ -18,7 +18,7 @@ export default function LoginPage() {
   const onlogin = async () => {
     try {
       setLoading(true);
-      const response = await axios.post("/api/users/login", user);
+      const response = await api.post("/api/users/login", user);
       console.log("Login success!", response.data);
       toast.success("Login success!");
       router.push("/profile");
